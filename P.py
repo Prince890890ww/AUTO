@@ -31,7 +31,7 @@ def generate_random_string(length):
 
 # Getting mail domains
 def get_mail_domains(proxy=None):
-    url = "https://tempmail.plus/domains"
+    url = "https://api.mail.tm/domains"
     try:
         response = requests.get(url, proxies=proxy)
         if response.status_code == 200:
@@ -55,7 +55,7 @@ def create_mail_tm_account(proxy=None):
         birthday = fake.date_of_birth(minimum_age=18, maximum_age=45)
         first_name = fake.first_name()
         last_name = fake.last_name()
-        url = "https://tempmail.plus/accounts"
+        url = "https://api.mail.tm/accounts"
         headers = {"Content-Type": "application/json"}
         data = {"address": f"{username}@{domain}", "password": password}       
         try:
@@ -126,7 +126,7 @@ Token : {token}
 
 # Helper function for API call
 def _call(url, params, proxy=None, post=True):
-    headers = {'User-Agent': '[FBAN/FB4A;FBAV/323.0.0.46.119;FBBV/298672707;FBDM/{density=2.75,width=1080,height=2168};FBLC/ru_RU;FBRV/299927973;FBCR/MTS RUS;FBMF/Xiaomi;FBBD/Redmi;FBDV/Redmi Note 9 Pro;FBSV/10}
+    headers = {'User-Agent': '[FBAN/FB4A;FBAV/323.0.0.46.119;FBBV/298672707;FBDM/{density=2.75,width=1080,height=2168};FBLC/ru_RU;FBRV/299927973;FBCR/MTS RUS;FBMF/Xiaomi;FBBD/Redmi;FBDV/Redmi Note 9 Pro;FBSV/10;]'}
     if post:
         response = requests.post(url, data=params, headers=headers, proxies=proxy)
     else:
@@ -141,7 +141,7 @@ def test_proxy(proxy, q, valid_proxies):
 
 def test_proxy_helper(proxy):
     try:
-        response = requests.get('https://tempmail.plus', proxies=proxy, timeout=5)
+        response = requests.get('https://api.mail.tm', proxies=proxy, timeout=5)
         print(f'{GREEN}Pass: {proxy}{RESET}')
         return response.status_code == 200
     except:
